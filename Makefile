@@ -5,6 +5,7 @@ plugins:
 		apt install curl gnupg net-tools nano -y
 		apt update
 		clear
+
 go-server:
 		echo "deb https://download.gocd.org /" | tee /etc/apt/sources.list.d/gocd.list
 		curl https://download.gocd.org/GOCD-GPG-KEY.asc | apt-key add -
@@ -14,6 +15,7 @@ go-server:
 		clear
 		ifconfig
 		service go-server start
+		
 go-agent:
 		echo "deb https://download.gocd.org /" | tee /etc/apt/sources.list.d/gocd.list
 		curl https://download.gocd.org/GOCD-GPG-KEY.asc | apt-key add -

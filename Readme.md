@@ -12,21 +12,21 @@ _Tasks:_
  _Create an ECS cluster and register the underlying ec2 instance to that newly created cluster with the help of AWS launch configuration and auto scaling group._
 - Approach:
   1. Starting with creating an ECS cluster which is shown in the below image.
-   ![Image](./Images/TS4.png)
+   ![Image](./Images/ECSCluster.png)
    > Here it could be observed that, there is a single ec2 instance linked up with the TecholutionECR (Should be ECS).
   2. I'm proceeding by using the `Add additional ECS instances` option available just above the listing. I will copy the configuration of ECS AutoScalling Group and use it to add another AutoScalling group as shown in image.
    
-  ![Image](./Images/TS7.png)
+  ![Image](./Images/AWSLaunchConfig.png)
 
   3. Here, In the below image it can be seen that we have an additional ECS instance listed below in the ECS instances listing.
 
-  ![Image](./Images/TS8.png)
+  ![Image](./Images/RegisteredEC2.png)
 
   > This is the required solution.
 
-   4. It could be seen that, we might arrive at a scenario where in an EC2 machine (pre-existing) needs now to be clusterized, A simple step that could be used to acheive this could be: adding the EC2 instance to our new/original AutoScalling Group.
+   1. It could be seen that, we might arrive at a scenario where in an EC2 machine (pre-existing) needs now to be clusterized, A simple step that could be used to acheive this could be: adding the EC2 instance to our new/original AutoScalling Group.
   
-   ![Image](./Images/TS9.png)
+   ![Image](./Images/RegisteringEC2.png)
 
    > In the above image, `MyWebApp` is being attached to our AutoScalling Group and inturn to our ECS Cluster.
 
@@ -38,9 +38,9 @@ _Create an AWS lambda function using any language or approach which will only de
 - Approach: 
   1. I'm starting with 3 EC2 instances (@ us-west-1), I have used `Name` tag for three of them, whose value is `Techolution1, Techolution2 & Sample` respectively as seen in the image below.
    
-  ![Image](./Images/TS1.png)
+  ![Image](./Images/NameTag.png)
    
-  ![Image](./Images/TS2.png) 
+  ![Image](./Images/DiffNameTag.png) 
 
   2. I've created a Lambda Function 'TecholutionDescribeEC2' and defined the code as follows.
 
@@ -110,7 +110,7 @@ REPORT RequestId: c1f967b9-a701-46bb-9b8d-08059b92fffb	Duration: 2660.85 ms	Bill
 
 ```
 
-![Image](Images/TS3.png)
+![Image](Images/LambdaFun.png)
 
 ---
 
@@ -135,11 +135,11 @@ chmod +x get-started.sh
 > Make sure to run the above as `superuser` or with `sudo` priviliges.
 
 >Server:
-![Image](Images/TS10.png)
-![Image](Images/TS11.png)
+![Image](Images/GoServerbyScript.png)
+![Image](Images/GoServeronWeb.png)
 
 >Agent:
-![Image](Images/TS12.png)
+![Image](Images/GoAgent.png)
 
 [Return.](#aws)
 
@@ -150,6 +150,10 @@ _Create a pipeline to build and publish a sample docker image to AWS ECR._
 - Approach:
 
   1. I'm using `BlueOcean Plugin` Jenkins Plugin so as to visualize this pipeline. I had hard configured the `DockerHub` and `AWS Credentials` on my Jenkins Server. 
+
+![Image](Images/Pipeline.png)
+
+![Image](Images/SuccessfulCI.png)
 
 
   > Fun Fact: GoCD was an idea born from poor visualization of Jenkins.. Howsoever, `BlueOcean Plugin` came into existence in the later years.
@@ -167,49 +171,27 @@ _Create a pipeline to build and publish a sample docker image to AWS ECR._
                  echo "Start Build"
                 }
            }
-
-           stage('Lint HTML') {
-               steps {
-                   sh 'tidy -q -e *.html'
-                }
-          }
-
-
           stage('Build image') {
             steps {
                 script {
-                    dockerImage = docker.build('krravindra/techolution')
-                    docker.withRegistry('', 'dockerhub') {
-                        dockerImage.push()
-                    }
+                    dockerImage = docker.build('446589149068.dkr.ecr.us-east-2.amazonaws.com/mytask')
                 }
             }
           }
-
-          stage('Deploy App') {
-            steps {
-                      withAWS(credentials: 'aws-cred', region:'us-west-1') {
-			sh '''
-			aws eks --region us-west-1 update-kubeconfig --name ECRCluster
-			kubectl apply -f ./kubernetes-config.yml
-			'''
-                      }
+          stage('Push Image') {
+              steps {
+                  script {
+                     docker.withRegistry('https://446589149068.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:aws'){
+                      dockerImage.push("latest")
                   }
-            }
-            
+              }
+          }
         }
-  }
+      }
+}
 ```
+![Image](Images/ECRListing.png)
 
+> Our Image listed in the ECR.
 
-
-
-
- 
-
-
-
-
-
-
-
+[Return.](#aws-devops-internship-from-techolution)

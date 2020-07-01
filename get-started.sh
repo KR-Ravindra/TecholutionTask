@@ -8,7 +8,7 @@ GoServer(){
         make
         make go-server
         echo " go-server has been installed  
-    " | pv -qL 10
+        " | pv -qL 10
         service go-server start
 }
 
@@ -19,7 +19,7 @@ GoAgent(){
         make
         make go-agent 
         echo " go-agent has been installed    
-    " | pv -qL 10
+        " | pv -qL 10
         service go-agent start
 }
 
