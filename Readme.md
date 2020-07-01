@@ -1,8 +1,8 @@
-# AWS DevOps Intern - 3 months internship from 'Techolution'.
+# AWS DevOps Internship from 'Techolution'.
 
-Assignment assigned by **Mr.Madhav Rao, Lead Talent Acquisition Specialist,Techolution**
+Assignment assigned by **Mr.Madhav Rao, Lead Talent Acquisition Specialist,Techolution.**
 
-_Task:_
+_Tasks:_
 
 > **AWS:** [SubTask-01](#subtask-01) | [SubTask-02](#subtask-02) || **GoCD:** [SubTask-a](#subtask-a) | [SubTask-b](#subtask-b)
 
