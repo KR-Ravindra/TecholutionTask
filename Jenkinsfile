@@ -19,24 +19,17 @@ pipeline {
           stage('Build image') {
             steps {
                 script {
-                    dockerImage = docker.build('krravindra/techolution')
-                    docker.withRegistry('', 'dockerhub') {
-                        dockerImage.push()
-                    }
+                    dockerImage = docker.build('446589149068.dkr.ecr.us-east-2.amazonaws.com/mytask')
                 }
             }
           }
-
-          stage('Deploy App') {
-            steps {
-                      withAWS(credentials: 'aws-cred', region:'us-east-2') {
-                    sh '''
-                    aws eks --region us-east-2 update-kubeconfig --name ECRCluster
-                    kubectl apply -f ./kubernetes-config.yml
-                    '''
-                      }
+          stage('Push Image') {
+              steps {
+                  script {
+                      dockerImage.push("latest")
                   }
-            }
+              }
+          }
             
         }
       }
