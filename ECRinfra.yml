@@ -343,7 +343,7 @@ Resources:
         ImageId: ami-07c1207a9d40bc3bd 
         IamInstanceProfile: !Ref NodeInstanceProfile
         InstanceType: !Ref InstanceType
-        KeyName: capstone
+        KeyName: techolution
         Tags:
           - Key: !Sub kubernetes.io/cluster/task
             Value: owned
