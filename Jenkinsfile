@@ -11,7 +11,7 @@ pipeline {
           stage('Build image') {
             steps {
                 script {
-                    dockerImage = docker.build('446589149068.dkr.ecr.us-east-2.amazonaws.com/mytask')
+                    dockerImage = docker.build('demo')
                 }
             }
           }
@@ -19,7 +19,7 @@ pipeline {
               steps {
                   script {
                     docker.withRegistry('https://446589149068.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:aws-cred'){
-                      dockerImage.image('446589149068.dkr.ecr.us-east-2.amazonaws.com/mytask').push("latest")
+                      dockerImage.push("latest")
                   }
               }
           }
