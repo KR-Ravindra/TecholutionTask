@@ -30,7 +30,9 @@ _Tasks:_
 
    > In the above image, `MyWebApp` is being attached to our AutoScalling Group and inturn to our ECS Cluster.
 
-[Return.](#aws)
+[Return.](#aws-devops-internship-from-techolution)
+
+---
 
  ### SubTask-02:
 _Create an AWS lambda function using any language or approach which will only describe the specific ec2 instances based on the given tag._  
@@ -112,6 +114,8 @@ REPORT RequestId: c1f967b9-a701-46bb-9b8d-08059b92fffb	Duration: 2660.85 ms	Bill
 
 ![Image](Images/LambdaFun.png)
 
+[Return.](#aws-devops-internship-from-techolution)
+
 ---
 
 ## GoCD:
@@ -141,7 +145,9 @@ chmod +x get-started.sh
 >Agent:
 ![Image](Images/GoAgent.png)
 
-[Return.](#aws)
+[Return.](#aws-devops-internship-from-techolution)
+
+---
 
 ### SubTask-b:
 
@@ -195,3 +201,5 @@ _Create a pipeline to build and publish a sample docker image to AWS ECR._
 > Our Image listed in the ECR.
 
 [Return.](#aws-devops-internship-from-techolution)
+
+---
