@@ -29,9 +29,9 @@ pipeline {
 
           stage('Deploy App') {
             steps {
-                      withAWS(credentials: 'aws-cred', region:'us-west-1') {
+                      withAWS(credentials: 'aws-cred', region:'us-east-1') {
 			sh '''
-			aws eks --region us-west-1 update-kubeconfig --name ECRCluster
+			aws eks --region us-east-1 update-kubeconfig --name ECRCluster
 			kubectl apply -f ./kubernetes-config.yml
 			'''
                       }
