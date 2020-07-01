@@ -145,6 +145,63 @@ chmod +x get-started.sh
 
 ### SubTask-b:
 
+_Create a pipeline to build and publish a sample docker image to AWS ECR._
+
+- Approach:
+
+  1. I'm using `BlueOcean Plugin` Jenkins Plugin so as to visualize this pipeline. I had hard configured the `DockerHub` and `AWS Credentials` on my Jenkins Server. 
+
+
+  > Fun Fact: GoCD was an idea born from poor visualization of Jenkins.. Howsoever, `BlueOcean Plugin` came into existence in the later years.
+
+  > JenkinsFile:
+
+  ```
+  pipeline {
+
+      agent any
+      stages {
+            stage('Start Pipeline') {
+              steps {
+                 echo "This is the first step of the build"
+                 echo "Start Build"
+                }
+           }
+
+           stage('Lint HTML') {
+               steps {
+                   sh 'tidy -q -e *.html'
+                }
+          }
+
+
+          stage('Build image') {
+            steps {
+                script {
+                    dockerImage = docker.build('krravindra/techolution')
+                    docker.withRegistry('', 'dockerhub') {
+                        dockerImage.push()
+                    }
+                }
+            }
+          }
+
+          stage('Deploy App') {
+            steps {
+                      withAWS(credentials: 'aws-cred', region:'us-west-1') {
+			sh '''
+			aws eks --region us-west-1 update-kubeconfig --name ECRCluster
+			kubectl apply -f ./kubernetes-config.yml
+			'''
+                      }
+                  }
+            }
+            
+        }
+  }
+```
+
+
 
 
 
