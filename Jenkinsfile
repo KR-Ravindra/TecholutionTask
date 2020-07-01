@@ -8,14 +8,6 @@ pipeline {
                  echo "Start Build"
                 }
            }
-
-           stage('Lint HTML') {
-               steps {
-                   sh 'tidy -q -e *.html'
-                }
-          }
-
-
           stage('Build image') {
             steps {
                 script {
